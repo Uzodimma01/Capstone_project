@@ -3,7 +3,7 @@ pipeline {
      stages {
          stage('Build') {
               steps {
-                  sh 'date "+%FT%T">/home/ubuntu/log.txt'
+                  sh 'sudo date "+%FT%T">/home/ubuntu/log.txt'
                   sh 'echo Building...'
               }
          }
