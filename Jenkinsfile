@@ -1,32 +1,52 @@
 pipeline {
      agent any
      stages {
-         stage('Cluster setup') {
-             steps {
-                 sh 'echo "Creating a cluster ..."'
-                 sh '''
-                     echo "Multiline shell steps works too"
-                     ls -lah
-                 '''
-             }
-         }
-         stage('Lint HTML') {
+         stage('Build') {
               steps {
-                  sh 'tidy -q -e *.html'
+                  sh 'echo Building...'
               }
          }
-         stage('Security Scan') {
-              steps { 
-                 aquaMicroscanner imageName: 'alpine:latest', notCompleted: 'exit 1', onDisallowed: 'fail'
-              }
-         }         
-         stage('Upload to AWS') {
+         stage('Lint files') {
               steps {
-                  withAWS(region:'us-east-2',credentials:'aws-static') {
-                  sh 'echo "Uploading content with AWS creds"'
-                      s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html', bucket:'static-jenkins-pipeline')
+                  sh 'bash make_lint.sh'
+              }
+         }
+         stage('Build Docker Image') {
+              steps {
+                  sh 'bash docker_build.sh'
+              }
+         }
+         stage('Upload Image to DockerHub') {
+              steps {
+                  withDockerRegistry([url: "", credentialsId: "DockerHub"]) {
+                      sh 'bash upload_docker.sh'
                   }
               }
          }
+         stage ('Create cluster') {
+             steps {
+                  echo 'creating cluster ...'
+                  withAWS(credentials: 'aws', region: 'us-west-2') {
+                      sh 'bash create_cluster.sh'
+                  }
+             }
+         }
+         stage ('Create nodes') {
+             steps {
+                  echo 'creating nodes ...'
+                  withAWS(credentials: 'AWS', region: 'us-west-2') {
+                      sh 'bash create_nodes.sh'
+                  }
+             }
+         }
+         stage('Deploy') {
+              
+        }
+        stage("Clean up") {
+              steps{
+                    echo 'Cleaning up...'
+                    sh 'bash docker system prune -f'
+              }
+        }
      }
 }
