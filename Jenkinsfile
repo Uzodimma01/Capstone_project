@@ -40,7 +40,9 @@ pipeline {
              }
          }
          stage('Deploy') {
-              
+              steps {
+                   echo 'On the way ...'
+              } 
         }
         stage("Clean up") {
               steps{
