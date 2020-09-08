@@ -1,5 +1,5 @@
 eksctl create nodegroup \
---cluster eksctl-$(<./variables/name.txt)-cluster \
+--cluster $(<./variables/name.txt) \
 --version auto \
 --name $(<./variables/name.txt) \
 --region $(<./variables/region.txt) \
