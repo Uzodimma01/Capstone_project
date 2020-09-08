@@ -2,8 +2,8 @@
 
 # Step 1:
 # This is your Docker ID/path
-dockerpath=$(<./variables/docker_path):latest
-dockerimage=$(<./variables/docker_image_name)
+dockerpath=$(<./variables/path.txt)
+dockerimage=$(<./variables/name.txt)
 
 # Step 2
 # Run the Docker Hub container with kubernetes
