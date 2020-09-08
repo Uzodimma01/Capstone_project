@@ -8,7 +8,7 @@ pipeline {
          }
          stage('Lint files') {
               steps {
-                  sh 'bash make_lint.sh'
+                  sh 'bash lint.sh'
               }
          }
          stage('Build Docker Image') {
