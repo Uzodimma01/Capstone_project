@@ -10,4 +10,4 @@ docker image ls
 
 # Step 3: 
 # Run app
-docker run -p 80:80 $(<./variables/name.txt)
+docker run -it --rm -d -p 80:80 $(<./variables/name.txt)
