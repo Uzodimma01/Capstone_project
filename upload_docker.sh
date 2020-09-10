@@ -4,7 +4,7 @@
 # Step 1:
 # Create dockerpath
 dockerpath=$(<./variables/path.txt)
-local_tag=$(<./variables/name.txt):latest
+local_tag=$(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
 docker tag $local_tag $dockerpath
 
 
