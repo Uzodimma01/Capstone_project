@@ -12,6 +12,6 @@
  aws cloudformation describe-stacks \
   --region $(<./variables/region.txt) --stack-name eksctl-$(<./variables/name.txt)-cluster --query "Stacks[0].Outputs[?OutputKey=='ARN'].OutputValue" \
    # prefixed "eksctl" and appended "cluster" to match cloudformation describe-stack StackName naming pattern 
-   --output text>/tmp/cluster_ARN.txt
+  --output text>/tmp/cluster_ARN.txt
   
  cat /tmp/cluster_ARN.txt
