@@ -14,14 +14,14 @@ pipeline {
          stage('Build Docker Image') {
               steps {
                    echo 'Building Docker image ...'
-//                  sh 'bash docker_build.sh'
+                  sh 'bash docker_build.sh'
               }
          }
          stage('Upload Image to DockerHub') {
               steps {
                   echo 'Uploading image to DockerHub ...'
                   withDockerRegistry([url: "", credentialsId: "DockerHub"]) {
-//                      sh 'bash upload_docker.sh'
+                      sh 'bash upload_docker.sh'
                   }
               }
          }
