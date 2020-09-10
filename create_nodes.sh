@@ -8,5 +8,5 @@ eksctl create nodegroup \
 --nodes $(<./variables/desired_node.txt) \
 --nodes-min $(<./variables/min_node.txt) \
 --nodes-max $(<./variables/max_node.txt) \
---ssh-access \
---ssh-public-key $(<./variables/access_key.txt)
+#--ssh-access \
+#--ssh-public-key $(<./variables/access_key.txt)
