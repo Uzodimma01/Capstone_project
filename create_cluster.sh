@@ -10,7 +10,8 @@
 ## mkdir -p /tmp/jenkins_build
  # Write cluster ARN to file
  aws cloudformation describe-stacks \
- --region $(<./variables/region.txt) --stack-name $(<./variables/name.txt) \
+ --region $(<./variables/region.txt) --stack-name eksctl-$(<./variables/name.txt)-cluster \ 
+ # prefixed "eksctl" and appended "cluster" to match eksctl cluster StackName naming pattern
  --query "Stacks[0].Outputs[?OutputKey=='ARN'].OutputValue" \
  --output text>/tmp/cluster_ARN.txt
  cat /tmp/cluster_ARN.txt
