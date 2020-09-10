@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+  name: capstone1-project:New
   labels:
-    app: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+    app: capstone1-project:New
   namespace: default
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+      app: capstone1-project:New
   strategy:
     rollingUpdate:
-      maxSurge: $(<./variables/max_surge.txt)
-      maxUnavailable: $(<./variables/max_unavailable.txt)
+      maxSurge: 25%
+      maxUnavailable: 25%
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+        app: capstone1-project:New
     spec:
       containers:
-        - image: $(<./variables/path.txt):$(<./variables/docker_image_tag.txt)
+        - image: uzodimma/capstone1-project:New
           imagePullPolicy: Always
-          name: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+          name: capstone1-project:New
           ports:
             - containerPort: 80
 
@@ -31,13 +31,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+  name: capstone1-project:New
   labels:
-    app: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+    app: capstone1-project:New
 spec:
   type: LoadBalancer
   selector:
-    app: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
+    app: capstone1-project:New
   ports:
     - port: 80
       targetPort: 80
