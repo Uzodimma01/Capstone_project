@@ -12,4 +12,5 @@
  aws cloudformation describe-stacks \
  --region $(<./variables/region.txt) --stack-name $(<./variables/name.txt) \
  --query "Stacks[0].Outputs[?OutputKey=='ARN'].OutputValue" \
- --output text>/tmp/jenkins_build/ARN.txt
+ --output text>/tmp/cluster_ARN.txt
+ cat /tmp/cluster_ARN.txt
