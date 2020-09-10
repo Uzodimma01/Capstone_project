@@ -23,7 +23,7 @@ spec:
       containers:
         - image: uzodimma/capstone1-project
           imagePullPolicy: Always
-          name: capstone1-project:New
+          name: capstone1-project
           ports:
             - containerPort: 80
 
