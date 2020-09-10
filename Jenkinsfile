@@ -13,13 +13,14 @@ pipeline {
          }
          stage('Build Docker Image') {
               steps {
-                  sh 'bash docker_build.sh'
+//                  sh 'bash docker_build.sh'
               }
          }
          stage('Upload Image to DockerHub') {
               steps {
+                  echo 'Uploading image to DockerHub ...'
                   withDockerRegistry([url: "", credentialsId: "DockerHub"]) {
-                      sh 'bash upload_docker.sh'
+//                      sh 'bash upload_docker.sh'
                   }
               }
          }
@@ -27,7 +28,7 @@ pipeline {
              steps {
                   echo 'creating cluster ...'
                   withAWS(credentials: 'AWS', region: 'us-west-2') {
-                      sh 'bash create_cluster.sh'
+//                      sh 'bash create_cluster.sh'
                   }
              }
          }
@@ -35,7 +36,7 @@ pipeline {
              steps {
                   echo 'creating nodes ...'
                   withAWS(credentials: 'AWS', region: 'us-west-2') {
-                      sh 'bash create_nodes.sh'
+//                      sh 'bash create_nodes.sh'
                   }
              }
          }
