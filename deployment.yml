@@ -6,7 +6,7 @@ metadata:
     app: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
   namespace: default
 spec:
-  replicas: $(($(<./variables/pod_replica_set.txt)-0))
+  replicas: 3
   selector:
     matchLabels:
       app: $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)
