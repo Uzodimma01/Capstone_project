@@ -29,7 +29,7 @@ pipeline {
              steps {
                   echo 'creating cluster ...'
                   withAWS(credentials: 'AWS', region: 'us-west-2') {
-//                      sh 'bash create_cluster.sh'
+                      sh 'bash create_cluster.sh'
                   }
              }
          }
@@ -37,7 +37,7 @@ pipeline {
              steps {
                   echo 'creating nodes ...'
                   withAWS(credentials: 'AWS', region: 'us-west-2') {
-//                      sh 'bash create_nodes.sh'
+                      sh 'bash create_nodes.sh'
                   }
              }
          }
