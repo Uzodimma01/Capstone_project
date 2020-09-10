@@ -10,5 +10,5 @@ docker image ls
 
 # Step 3: 
 # Run app
-docker run -it --rm -d -p 80:80 $(<./variables/name.txt)>/tmp/docker_container_Id.txt
+docker run -it --rm -d -p 80:80 $(<./variables/name.txt):$(<./variables/docker_image_tag.txt)>/tmp/docker_container_Id.txt
 cat /tmp/docker_container_Id.txt
