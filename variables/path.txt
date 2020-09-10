@@ -1,1 +1,1 @@
-uzodimma/capstone-project:latest
+uzodimma/capstone-project
