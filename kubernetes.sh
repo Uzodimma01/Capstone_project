@@ -14,7 +14,7 @@ dockerimage=$(<./variables/name.txt)
 ########################################
 aws eks --region $(<./variables/region.txt) update-kubeconfig --name $(<./variables/name.txt)
 kubectl config use-context $(</tmp/cluster_ARN.txt)
-kubectl set image deployments/$(<./variables/name.txt):$(<./variables/docker_image_tag.txt) $(<./variables/path.txt):$(<./variables/docker_image_tag.txt)
+kubectl set image deployments/$(<./variables/name.txt) $(<./variables/path.txt):$(<./variables/docker_image_tag.txt)
 kubectl apply -f ./deployment.yml
 ########################################
 # Wait for pod creation to complete
