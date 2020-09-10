@@ -41,7 +41,10 @@ pipeline {
          }
          stage('Deploy') {
               steps {
-                   echo 'On the way ...'
+                   echo 'Deploying app to AWS ...'
+                   withAWS(credentials: 'AWS', region: 'us-west-2') {
+                        sh 'bash kubernetes.sh'
+                   }
               } 
         }
         stage("Clean up") {
