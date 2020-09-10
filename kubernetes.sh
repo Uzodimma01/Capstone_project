@@ -11,12 +11,12 @@ dockerimage=$(<./variables/name.txt)
 #    --generator=run-pod/v1\
 #    --image=$dockerpath\
 #    --port=80 --labels app=$dockerimage
-########################################
+
 aws eks --region $(<./variables/region.txt) update-kubeconfig --name $(<./variables/name.txt)
 kubectl config use-context $(</tmp/cluster_ARN.txt)
 kubectl set image deployments/$(<./variables/name.txt) $(<./variables/name.txt)=$(<./variables/path.txt):$(<./variables/docker_image_tag.txt)
 kubectl apply -f ./deployment.yml
-########################################
+
 # Wait for pod creation to complete
 sleep 20s
 
@@ -32,3 +32,5 @@ kubectl expose deployment $dockerimage --type=LoadBalancer --port=80
 sleep 20s
 
 kubectl get services
+
+echo "Complete"
