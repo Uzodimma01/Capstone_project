@@ -6,22 +6,28 @@ pipeline {
                   sh 'echo Building...'
               }
          }
-         stage('Lint files') {
+         stage('Lint files') { // This stage lints the Dockerfile and the HTML file
               steps {
-                  sh 'bash lint.sh'
+                   sh 'hadolint Dockerfile' // Lint the Dockerfile using Hadolint
+                   sh 'tidy -q -e index.html' // Lint the HTML file using Tidy
               }
          }
-         stage('Build Docker Image') {
+         stage('Build Docker Image') { // This stage builds the Docker image
               steps {
                    echo 'Building Docker image ...'
-                  sh 'bash docker_build.sh'
+                   sh 'docker build --tag=$(<./variables/name.txt):$(<./variables/docker_image_tag.txt) .'// Build Docker image with the content of the .txt files in the 'variables' folder
+                   sh 'docker image ls'
               }
          }
-         stage('Upload Image to DockerHub') {
+         stage('Upload Image to DockerHub') { // This stage tags and uploads an image to Docker Hub
               steps {
                   echo 'Uploading image to DockerHub ...'
                   withDockerRegistry([url: "", credentialsId: "DockerHub"]) {
-                      sh 'bash upload_docker.sh'
+                       sh 'dockerpath=$(<./variables/path.txt)/$(<./variables/name.txt):$(<./variables/docker_image_tag.txt)' // Create dockerpath
+                       sh 'local_tag=$(<./variables/name.txt):$(<./variables/docker_image_tag.txt)'
+                       sh 'docker tag $local_tag $dockerpath'
+                       sh 'echo "Docker ID and Image: $dockerpath"' // Authenticate and tag the docker image
+                       sh 'docker push $dockerpath' // Push the docker image to Docker registery
                   }
               }
          }
@@ -29,7 +35,8 @@ pipeline {
              steps {
                   echo 'creating cluster ...'
                   withAWS(credentials: 'AWS', region: 'us-west-2') {
-                      sh 'bash create_cluster.sh'
+                       sh 'eksctl create cluster --name $(<./variables/name.txt) --version 1.17 --without-nodegroup'
+                       sh 'get_cluster_ARN.sh'
                   }
              }
          }
@@ -45,7 +52,14 @@ pipeline {
               steps {
                    echo 'Deploying app to AWS ...'
                    withAWS(credentials: 'AWS', region: 'us-west-2') {
-                        sh 'bash kubernetes.sh'
+                        sh 'dockerpath=$(<./variables/path.txt):$(<./variables/docker_image_tag.txt)'
+                        sh 'dockerimage=$(<./variables/name.txt)'
+                        sh 'aws eks --region $(<./variables/region.txt) update-kubeconfig --name $(<./variables/name.txt)'
+                        sh 'kubectl config use-context $(</tmp/cluster_ARN.txt)'
+                        sh 'kubectl set image deployments/$(<./variables/name.txt) $(<./variables/name.txt)=$(<./variables/path.txt):$(<./variables/docker_image_tag.txt)'
+                        sh 'kubectl apply -f ./deployment.yml'
+                        sh 'sleep 20s' // Wait for 20 seconds before proceeding to enable pod service to come up
+                        sh 'kubectl get services'
                    }
               } 
         }
