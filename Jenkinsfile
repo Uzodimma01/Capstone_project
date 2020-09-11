@@ -15,7 +15,7 @@ pipeline {
          stage('Build Docker Image') { // This stage builds the Docker image
               steps {
                    echo 'Building Docker image ...'
-                   sh 'docker build --tag=Test:New .'// Build Docker image with the content of the .txt files in the 'variables' folder
+                   sh 'docker build --tag=test:new .'// Build Docker image with the content of the .txt files in the 'variables' folder
                    sh 'docker image ls'
               }
          }
