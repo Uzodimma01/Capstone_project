@@ -14,22 +14,22 @@ pipeline {
          }
          stage('Build Docker Image') { // This stage builds the Docker image
               steps {
-                   echo 'Building Docker image ...'
+                   sh 'echo Building Docker image ...'
                    sh 'docker build --tag=test:new .'// Build Docker image with the content of the .txt files in the 'variables' folder
                    sh 'docker image ls'
               }
          }
          stage('Upload Image to DockerHub') { // This stage tags and uploads an image to Docker Hub
               steps {
-                  echo 'Uploading image to DockerHub ...'
+                  sh 'echo Uploading image to DockerHub ...'
                   withDockerRegistry([url: "", credentialsId: "DockerHub"]) {
                        sh 'dockerpath=uzodimma/test:new' // Create dockerpath
                        sh 'local_tag=test:new'
-                       echo 'local_tag'
-                       echo '$dockerpath'
-                       sh 'docker tag test:new uzodimma/test:new'
-                       sh 'echo "Docker ID and Image: $dockerpath"' // Authenticate and tag the docker image
-                       sh 'docker push $dockerpath' // Push the docker image to Docker registery
+                       sh 'echo $local_tag'
+                       sh 'echo $dockerpath'
+                       sh 'docker tag test:new uzodimma/uzodimma/test:new'
+                       sh 'echo "Docker ID and Image: uzodimma/test:new"' // Authenticate and tag the docker image
+                       sh 'docker push uzodimma/test:new' // Push the docker image to Docker registery
                   }
               }
          }
