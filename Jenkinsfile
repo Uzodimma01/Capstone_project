@@ -23,8 +23,8 @@ pipeline {
               steps {
                   echo 'Uploading image to DockerHub ...'
                   withDockerRegistry([url: "", credentialsId: "DockerHub"]) {
-                       sh 'dockerpath=$(<./variables/path.txt)/$(<./variables/name.txt):$(<./variables/docker_image_tag.txt)' // Create dockerpath
-                       sh 'local_tag=$(<./variables/name.txt):$(<./variables/docker_image_tag.txt)'
+                       sh 'dockerpath=uzodimma/test:new' // Create dockerpath
+                       sh 'local_tag=test:new'
                        sh 'docker tag $local_tag $dockerpath'
                        sh 'echo "Docker ID and Image: $dockerpath"' // Authenticate and tag the docker image
                        sh 'docker push $dockerpath' // Push the docker image to Docker registery
