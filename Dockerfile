@@ -1,3 +1,4 @@
+# hadolint ignore=DL3007
 FROM nginx:latest
 
 # Copy source code to working directory
