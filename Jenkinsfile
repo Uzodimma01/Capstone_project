@@ -26,8 +26,9 @@ pipeline {
                        sh 'dockerpath=uzodimma/test:new' // Create dockerpath
                        sh 'local_tag=test:new'
                        echo 'local_tag'
-                       echo 'dockerpath'
-                       sh 'docker tag $test:new $uzodimma/test:new'
+                       echo '$dockerpath'
+                       echo'$local_tag
+                       sh 'docker tag test:new uzodimma/test:new'
                        sh 'echo "Docker ID and Image: $dockerpath"' // Authenticate and tag the docker image
                        sh 'docker push $dockerpath' // Push the docker image to Docker registery
                   }
