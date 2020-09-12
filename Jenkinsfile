@@ -21,12 +21,17 @@ pipeline {
                     }
                }
           }
+          stage("Docker image") {
+               steps {
+                    sh 'echo Building Docker image ...'
+                    sh "docker build --tag=${env.name}:${env.tag} ."
+                    sh 'docker image ls'
           stage("Lint files") {
                steps {
                     echo "Linting HTML file..."
-                    sh "tidy -q -e index.html"
+                    sh 'tidy -q -e index.html'
                     echo "Linting Dockerfile..."
-                    sh "hadolint Dockerfile"
+                    sh 'hadolint Dockerfile'
                }
           }
      }
