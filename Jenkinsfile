@@ -18,23 +18,23 @@ pipeline {
                          env.tag = readFile("./variables/tag.txt").trim()
                          env.name = readFile("./variables/name.txt").trim()
                          env.path = readFile("./variables/path.txt").trim()
-                         sh "pwd"
+                         echo "pwd"
                          name="${env.name}"
                          tag="${env.tag}"
                          path="${env.path}"
-                         sh "pwd"
+                         echo "pwd"
                          lo="name"
-                         sh "pwd"
+                         echo "pwd"
                     }
                }
           }
           stage("Docker image build") {
                steps {
-                    sh "pwd"
+                    echo "pwd"
                     echo "Hello Docker"
-                    sh "pwd"
+                    echo "pwd"
                     echo "Hello $name"
-                    sh "pwd"
+                    echo "pwd"
                }
           }
      }
