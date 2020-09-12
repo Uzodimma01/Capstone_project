@@ -23,10 +23,5 @@ pipeline {
                     }
                }
           }
-          stage("Docker image") {
-               steps {
-                    sh 'echo Building Docker images ...'
-               }
-          }
      }
 }
