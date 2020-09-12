@@ -19,6 +19,7 @@ pipeline {
                          name=${env.name}
                          tag="${env.tag}"
                          path="${env.path}"
+                         lo="name"
                     }
                }
           }
@@ -26,6 +27,7 @@ pipeline {
                steps {
                     sh 'echo Building Docker images ...'
                     sh 'echo $name'
+                    sh 'echo "${lo}"
                     sh "docker build -t $name:$tag ."
                     sh 'docker image ls'
                }
