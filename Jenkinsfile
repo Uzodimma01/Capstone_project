@@ -26,6 +26,8 @@ pipeline {
                     sh 'echo Building Docker image ...'
                     sh "docker build --tag=${env.name}:${env.tag} ."
                     sh 'docker image ls'
+               }
+          }
           stage("Lint files") {
                steps {
                     echo "Linting HTML file..."
