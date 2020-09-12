@@ -23,10 +23,10 @@ pipeline {
           }
           stage("Lint files") {
                steps {
-                    echo "Linting Dockerfile..."
-                    sh "hadolint Dockerfile"
                     echo "Linting HTML file..."
                     sh "tidy -q -e index.html"
+                    echo "Linting Dockerfile..."
+                    sh "hadolint Dockerfile"
                }
           }
      }
