@@ -23,7 +23,7 @@ pipeline {
           }
           stage("Build") {
                steps {
-                    echo "Buillding pipeline...
+                    echo "Buillding pipeline..."
                }
           }
           stage("Lint files") {
