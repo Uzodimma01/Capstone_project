@@ -22,7 +22,7 @@ pipeline {
           stage("Docker image") {
                steps {
                     sh 'echo Building Docker images ...'
-                    sh "docker build -t ${env.name}:${env.tag} ."
+                    sh "docker build -t $env.name:$env.tag ."
                     sh 'docker image ls'
                }
           }
