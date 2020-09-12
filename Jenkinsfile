@@ -21,11 +21,6 @@ pipeline {
                     }
                }
           }
-          stage("Build") {
-               steps {
-                    echo "Building pipeline for ${env.path}/${env.name}:${env.tag}"
-               }
-          }
           stage("Lint files") {
                steps {
                     echo "Linting Dockerfile..."
