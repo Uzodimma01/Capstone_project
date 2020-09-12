@@ -25,6 +25,7 @@ pipeline {
           stage("Docker image") {
                steps {
                     sh 'echo Building Docker images ...'
+                    sh 'echo $name'
                     sh "docker build -t $name:$tag ."
                     sh 'docker image ls'
                }
