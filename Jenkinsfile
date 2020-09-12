@@ -26,7 +26,7 @@ pipeline {
           stage("Docker image build") {
                steps {
                     echo "Hello Docker"
-                    echo "Hello "$name""
+                    echo "Hello '$name'"
                }
           }
      }
