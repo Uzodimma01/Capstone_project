@@ -14,27 +14,27 @@ pipeline {
                steps {
                     script {
                          echo "Setting up variables for the build"
-                         sh "pwd"
+                         sh "$pwd"
                          env.tag = readFile("./variables/tag.txt").trim()
                          env.name = readFile("./variables/name.txt").trim()
                          env.path = readFile("./variables/path.txt").trim()
-                         echo "pwd"
+                         echo "$pwd"
                          name="${env.name}"
                          tag="${env.tag}"
                          path="${env.path}"
-                         echo "pwd"
+                         echo "$pwd"
                          lo="name"
-                         echo "pwd"
+                         echo "$pwd"
                     }
                }
           }
           stage("Docker image build") {
                steps {
-                    echo "pwd"
+                    echo "$pwd"
                     echo "Hello Docker"
-                    echo "pwd"
+                    echo "$pwd"
                     echo "Hello $name"
-                    echo "pwd"
+                    echo "$pwd"
                }
           }
      }
