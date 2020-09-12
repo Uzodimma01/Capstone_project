@@ -29,7 +29,7 @@ pipeline {
           stage("Lint files") {
                steps {
                     echo "Linting Dockerfile..."
-                    hadolint Dockerfile"
+                    hadolint Dockerfile
                     echo "Linting HTML file..."
                     tidy -q -e index.html
                }
