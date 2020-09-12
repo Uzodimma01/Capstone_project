@@ -54,7 +54,7 @@ pipeline {
               steps {
                    echo 'Deploying app to AWS ...'
                    withAWS(credentials: 'AWS', region: 'us-west-2') {
-                        sh 'dockerpath=uzodimma/test:new
+                        sh 'dockerpath=uzodimma/test:new'
                         sh 'dockerimage=test'
                         sh 'aws eks --region us-west-2 update-kubeconfig --name test'
                         sh 'kubectl config use-context $(</tmp/cluster_ARN.txt)'
