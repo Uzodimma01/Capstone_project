@@ -13,7 +13,10 @@ pipeline {
                steps {
                     script {
                          echo "Setting up variables for the build"
-                         env.ami_type = readFile("./variables/ami_type.txt").trim()
+                         env.tag = readFile("./variables/tag.txt").trim()
+                         env.name = readFile("./variables/name.txt").trim()
+                         env.output_dir = readFile("./variables/output_dir.txt").trim()
+                         env.path = readFile("./variables/path.txt").trim()
                     }
                }
           }
