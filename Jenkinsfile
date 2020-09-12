@@ -27,7 +27,6 @@ pipeline {
                steps {
                     echo "Hello Docker"
                     echo "Hello $name"
-                    sh 'docker build -t lame .'
                }
           }
      }
