@@ -29,9 +29,9 @@ pipeline {
           stage("Lint files") {
                steps {
                     echo "Linting Dockerfile..."
-                    hadolint Dockerfile
+                    sh "hadolint Dockerfile"
                     echo "Linting HTML file..."
-                    tidy -q -e index.html
+                    sh "tidy -q -e index.html"
                }
           }
           stage("Build Docker Image") {
