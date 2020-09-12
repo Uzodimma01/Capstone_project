@@ -26,9 +26,9 @@ pipeline {
           }
           stage("Docker image build") {
                steps {
-                    sh "docker build --tag=hello2 ."
                     echo "Hello Docker"
                     echo "Hello $name"
+                    sh "docker build --tag=hello2 ."
                }
           }
      }
