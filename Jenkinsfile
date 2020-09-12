@@ -30,9 +30,9 @@ pipeline {
                steps {
                     script {
                          echo "Linting Dockerfile..."
-                         hadolint Dockerfile
+                         "hadolint Dockerfile"
                          echo "Linting HTML file..."
-                         tidy -q -e index.html
+                         "tidy -q -e index.html"
                     }
                }
           }
