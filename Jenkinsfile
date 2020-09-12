@@ -31,7 +31,7 @@ pipeline {
                     script {
                          echo "Linting Dockerfile..."
                          hadolint Dockerfile
-                         echo "Linting HTML file...
+                         echo "Linting HTML file..."
                          tidy -q -e index.html
                     }
                }
