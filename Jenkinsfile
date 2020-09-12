@@ -1,6 +1,14 @@
 pipeline {
      agent any
      stages {
+          stage("Lint files") {
+               steps {
+                    echo "Linting HTML file..."
+                    sh "tidy -q -e index.html"
+                    echo "Linting Dockerfile..."
+                    sh "hadolint Dockerfile"
+               }
+          }
           stage("Variables setup") {
                steps {
                     script {
@@ -19,14 +27,6 @@ pipeline {
                          env.pod_replica_set = readFile("./variables/pod_replica_set.txt").trim()
                          env.region = readFile("./variables/region.txt").trim()
                     }
-               }
-          }
-          stage("Lint files") {
-               steps {
-                    echo "Linting HTML file..."
-                    sh "tidy -q -e index.html"
-                    echo "Linting Dockerfile..."
-                    sh "hadolint Dockerfile"
                }
           }
 //          stage("Docker image") {
