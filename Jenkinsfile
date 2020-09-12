@@ -27,7 +27,7 @@ pipeline {
                steps {
                     echo "Hello Docker"
                     echo "Hello $name"
-                    echo "Hello '$name'"
+                    echo "Hello $lo"
                }
           }
      }
