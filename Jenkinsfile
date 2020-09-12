@@ -4,7 +4,6 @@ pipeline {
           stage("Variables setup") {
                steps {
                     sh "bash variables.sh"
-                    }
                }
           }
           stage("Lint files") {
