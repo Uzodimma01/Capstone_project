@@ -7,7 +7,7 @@ pipeline {
                     sh "tidy -q -e index.html"
                     echo "Linting Dockerfile..."
                     sh "hadolint Dockerfile"
-                    sh "docker build --tag=hello ."
+                    sh "docker build --tag=hello1 ."
                }
           }
           stage("Variables setup") {
@@ -26,6 +26,7 @@ pipeline {
           }
           stage("Docker image build") {
                steps {
+                    sh "docker build --tag=hello2 ."
                     echo "Hello Docker"
                     echo "Hello $name"
                }
