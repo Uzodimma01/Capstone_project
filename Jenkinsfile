@@ -23,5 +23,10 @@ pipeline {
                     }
                }
           }
+          stage("Docker image build") {
+               steps {
+                    echo "Hello Docker"
+               }
+          }
      }
 }
