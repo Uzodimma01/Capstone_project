@@ -17,8 +17,8 @@ pipeline {
                          env.name = readFile("./variables/name.txt").trim()
                          env.path = readFile("./variables/path.txt").trim()
                          name=${env.name}
-                         tag=${env.tag}
-                         path=${env.path}
+                         tag="${env.tag}"
+                         path="${env.path}"
                     }
                }
           }
