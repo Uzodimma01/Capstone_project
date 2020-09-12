@@ -1,75 +1,40 @@
 pipeline {
      agent any
      stages {
-         stage('Build') {
-              steps {
-                  sh 'echo Building...'
-              }
-         }
-         stage('Lint files') { // This stage lints the Dockerfile and the HTML file
-              steps {
-                   sh 'hadolint Dockerfile' // Lint the Dockerfile using Hadolint
-                   sh 'tidy -q -e index.html' // Lint the HTML file using Tidy
-              }
-         }
-         stage('Build Docker Image') { // This stage builds the Docker image
-              steps {
-                   sh 'echo Building Docker image ...'
-                   sh 'docker build --tag=test:new .'// Build Docker image with the content of the .txt files in the 'variables' folder
-                   sh 'docker image ls'
-              }
-         }
-         stage('Upload Image to DockerHub') { // This stage tags and uploads an image to Docker Hub
-              steps {
-                  sh 'echo Uploading image to DockerHub ...'
-                  withDockerRegistry([url: "", credentialsId: "DockerHub"]) {
-                       sh 'dockerpath=uzodimma/test:new' // Create dockerpath
-                       sh 'local_tag=test:new'
-                       sh 'echo $local_tag'
-                       sh 'echo $dockerpath'
-                       sh 'docker tag test:new uzodimma/test:new'
-                       sh 'echo "Docker ID and Image: uzodimma/test:new"' // Authenticate and tag the docker image
-                       sh 'docker push uzodimma/test:new' // Push the docker image to Docker registery
-                  }
-              }
-         }
-         stage ('Create cluster') {
-             steps {
-                  echo 'creating cluster ...'
-                  withAWS(credentials: 'AWS', region: 'us-west-2') {
-                       sh 'eksctl create cluster --name test --version 1.17 --without-nodegroup'
-                       sh 'get_cluster_ARN.sh'
-                  }
-             }
-         }
-         stage ('Create nodes') {
-             steps {
-                  echo 'creating nodes ...'
-                  withAWS(credentials: 'AWS', region: 'us-west-2') {
-                      sh 'bash create_nodes.sh'
-                  }
-             }
-         }
-         stage('Deploy') {
-              steps {
-                   echo 'Deploying app to AWS ...'
-                   withAWS(credentials: 'AWS', region: 'us-west-2') {
-                        sh 'dockerpath=uzodimma/test:new'
-                        sh 'dockerimage=test'
-                        sh 'aws eks --region us-west-2 update-kubeconfig --name test'
-                        sh 'kubectl config use-context $(</tmp/cluster_ARN.txt)'
-                        sh 'kubectl set image deployments/test test=uzodimma/test:new'
-                        sh 'kubectl apply -f ./deployment.yml'
-                        sh 'sleep 20s' // Wait for 20 seconds before proceeding to enable pod service to come up
-                        sh 'kubectl get services'
-                   }
-              } 
-        }
-        stage("Clean up") {
-              steps{
-                    echo 'Cleaning up...'
-                    sh 'bash clean_up.sh'
-              }
-        }
+          stage("Variables setup") {
+               steps {
+                    script {
+                         echo "Setting up variables for the build"
+                         env.ami_type = readFile("./variables/ami_type.txt").trim()
+                         env.desired_node = readFile("./variables/desired_node.txt").trim()
+                         env.tag = readFile("./variables/tag.txt").trim()
+                         env.max_node = readFile("./variables/max_node.txt").trim()
+                         env.max_surge = readFile("./variables/max_surge.txt").trim()
+                         env.max_unavailable = readFile("./variables/max_unavailable.txt").trim()
+                         env.min_node = readFile("./variables/min_node.txt").trim()
+                         env.name = readFile("./variables/name.txt").trim()
+                         env.node_type = readFile("./variables/node_type.txt").trim()
+                         env.output_dir = readFile("./variables/output_dir.txt").trim()
+                         env.path = readFile("./variables/path.txt").trim()
+                         env.pod_replica_set = readFile("./variables/pod_replica_set.txt").trim()
+                         env.region = readFile("./variables/region.txt").trim()
+                    }
+               }
+          }
+          stage("Lint files") {
+               steps {
+                    echo "Linting HTML file..."
+                    sh 'tidy -q -e index.html'
+                    echo "Linting Dockerfile..."
+                    sh 'hadolint Dockerfile'
+               }
+          }
+          stage("Docker image") {
+               steps {
+                    sh 'echo Building Docker image ...'
+                    sh "docker build -t ${env.name}:${env.tag} ."
+                    sh 'docker image ls'
+               }
+          }
      }
 }
