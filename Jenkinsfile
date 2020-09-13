@@ -1,5 +1,4 @@
-pipeline {
-     agent any
+script{
      echo "Setting up variables for the build"
      sh "$pwd"
      env.tag = readFile("variables/tag.txt").trim()
@@ -12,6 +11,9 @@ pipeline {
      echo "$pwd"
      lo="name"
      echo "$pwd"
+}
+pipeline {
+     agent any
      stages {
           stage("Lint files") {
                steps {
