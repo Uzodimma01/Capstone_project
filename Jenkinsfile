@@ -1,18 +1,7 @@
 pipeline {
      agent any
      stages {
-          stage("Variables setup") {
-               script{
-                    echo "Setting up variables for the build"
-                    export env.tag = readFile("variables/tag.txt").trim()
-                    export env.name = readFile("variables/name.txt").trim()
-                    export env.path = readFile("variables/path.txt").trim()
-                    export name="${env.name}"
-                    export tag="${env.tag}"
-                    export path="${env.path}"
-                    export lo="name"
-               }
-          }
+
           stage("Lint files") {
                steps {
                     echo "Linting HTML file..."
@@ -24,6 +13,16 @@ pipeline {
           }
           stage("Variables setup") {
                steps {
+                    script{
+                         echo "Setting up variables for the build"
+                         export env.tag = readFile("variables/tag.txt").trim()
+                         export env.name = readFile("variables/name.txt").trim()
+                         export env.path = readFile("variables/path.txt").trim()
+                         export name="${env.name}"
+                         export tag="${env.tag}"
+                         export path="${env.path}"
+                         export lo="name"
+                    }
                echo "testing"     
                }
           }
