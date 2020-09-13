@@ -1,20 +1,20 @@
 pipeline {
      agent any
-     script {
-          echo "Setting up variables for the build"
-          sh "$pwd"
-          env.tag = readFile("variables/tag.txt").trim()
-          env.name = readFile("variables/name.txt").trim()
-          env.path = readFile("variables/path.txt").trim()
-          echo "$pwd"
-          name="${env.name}"
-          tag="${env.tag}"
-          path="${env.path}"
-          echo "$pwd"
-          lo="name"
-          echo "$pwd"
-     }
      stages {
+          script{
+               echo "Setting up variables for the build"
+               sh "$pwd"
+               env.tag = readFile("variables/tag.txt").trim()
+               env.name = readFile("variables/name.txt").trim()
+               env.path = readFile("variables/path.txt").trim()
+               echo "$pwd"
+               name="${env.name}"
+               tag="${env.tag}"
+               path="${env.path}"
+               echo "$pwd"
+               lo="name"
+               echo "$pwd"
+          }
           stage("Lint files") {
                steps {
                     echo "Linting HTML file..."
